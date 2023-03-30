@@ -127,15 +127,14 @@ end
 %% DEFINE PARAMETERS D2
 % these are subject to change
 Subject_Index = { '02'};
-ModelDimen = 2;
-n_iterations = 50;
+ModelDimen = 1;
+n_iterations = 100;
 
 %% start loop day2
 parfor si = 1:length(Subject_Index)
 
-    % read in stimlists
-    stim_resp = load([stimpath filesep 'ps_' Subject_Index{si} '_day2_stim_resp.mat'], 'stim_resp');
-    
+    stim_resp = readtable([stimpath filesep 'ps_' Subject_Index{si} '_day2_stim_resp.mat']); % read in stimlists
+
     stim_resp = struct2array(stim_resp);
 
     ST = stim_resp(:,1:4);
