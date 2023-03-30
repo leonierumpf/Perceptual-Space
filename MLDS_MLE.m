@@ -81,14 +81,19 @@ sigma = 1;
 
 sigma = Estimate(end);
 p = Estimate(1:end-1);
+p = reshape(p, 2, 6);
+%p = [p(1:3), 0, p(4:5), 1, p(end)];
+p = [p(:,1:3), [1;0], p(:, 4:5), [1;1], p(:, end)]; % fixate position 4 and 7 (GS2 and GS5) 2D
 
 
 %Add the first point that is immobile
 
 if ModelDimen == 2
-    Estimate = [1;0;p;1;1;sigma];
+   % Estimate = [1;0;p;1;1;sigma];
+    Estimate = [p(:);sigma];
 elseif ModelDimen == 1
-    Estimate = [0;p;1;sigma];
+%     Estimate = [0;p;1;sigma];
+    Estimate = [p(:);sigma];
 end
     
     
