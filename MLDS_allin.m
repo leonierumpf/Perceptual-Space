@@ -23,9 +23,9 @@ mainpath = 'C:\Users\rumpf\Documents\perceptual_space';
 %
 % in stimpath all the nice tables of each subjects are stored in a 216x5
 % matrix
-stimpath = 'C:\Users\rumpf\Documents\perceptual_space\logfiles\data\stim_resp'
+stimpath = 'C:\Users\rumpf\Documents\perceptual_space\logfiles\data\stim_resp';
 
-savepath = 'C:\Users\rumpf\Documents\perceptual_space\best_positions'
+savepath = 'C:\Users\rumpf\Documents\perceptual_space\best_positions';
 
 % Set working dictonary
 cd(mainpath);
@@ -34,13 +34,13 @@ addpath ('C:\Users\rumpf\Documents\perceptual_space\MLDS scripts');
 
 %% DEFINE PARAMETERS D1
 % these are subject to change
-Subject_Index = { '02'};
+Subject_Index = { '02', '03', '04', '05', '06', '07', '08', '10', '11', '14', '15'};
 ModelDimen = 1;
-n_iterations = 50;
+n_iterations = 100;
 
 %% start loop day1
 
-parfor si = 1:length(Subject_Index)
+for si = 1:length(Subject_Index)
 
     stim_resp = load([stimpath filesep 'ps_' Subject_Index{si} '_day1_stim_resp.mat'], 'stim_resp'); % read in stimlists
 
@@ -87,7 +87,8 @@ parfor si = 1:length(Subject_Index)
             text(best_position(1, i), 0, num2str(i));
         end
 
-        save([savepath filesep '1D_best_positions_day1' filesep 'ps_' Subject_Index{si} '1D_best_position_day1.mat'], '1D_best_position_d1');
+        savefig([savepath filesep '1D_best_positions_day1' filesep 'ps_' Subject_Index{si} '_1D_best_position_day1.fig']);
+        save([savepath filesep '1D_best_positions_day1' filesep 'ps_' Subject_Index{si} '_1D_best_position_day1.mat']);
     
     elseif ModelDimen == 2
 
@@ -126,12 +127,12 @@ end
 
 %% DEFINE PARAMETERS D2
 % these are subject to change
-Subject_Index = { '02'};
+Subject_Index = { '02', '03', '04', '05', '07', '09', '10', '11', '12', '14'};
 ModelDimen = 2;
 n_iterations = 50;
 
 %% start loop day2
-parfor si = 1:length(Subject_Index)
+for si = 1:length(Subject_Index)
 
     % read in stimlists
     stim_resp = load([stimpath filesep 'ps_' Subject_Index{si} '_day2_stim_resp.mat'], 'stim_resp');
@@ -171,12 +172,15 @@ parfor si = 1:length(Subject_Index)
         fprintf('Best average likelihood: %.2f %%\n', exp(-best_neg_ll) * 100);
         % fprintf('Best average likelihood: %.2f %%\n', best_neg_ll * 100);
 
-        figure;
-        scatter(best_position(1, :), best_position(1, :));
+         figure;
+       % scatter(best_position(1, :), best_position(1, :));
+         scatter(best_position(1, :), 0);
         for i = 1:8
-            text(best_position(1, i), best_position(1, i), num2str(i));
+           % text(best_position(1, i), best_position(1, i), num2str(i));
+            text(best_position(1, i), 0, num2str(i));
         end
 
+        savefig([savepath filesep '1D_best_positions_day2' filesep 'ps_' Subject_Index{si} '1D_best_position_day2.fig']);
         save([savepath filesep '1D_best_positions_day2' filesep 'ps_' Subject_Index{si} '1D_best_position_day2.mat'], '1D_best_position_d2');
 
     elseif ModelDimen == 2
