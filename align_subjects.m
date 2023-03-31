@@ -21,22 +21,22 @@ mainpath = 'C:\Users\rumpf\Documents\perceptual_space';
 
 % Set working dictonary
 cd(mainpath);
-addpath ('C:\Users\rumpf\Documents\perceptual_space\logfiles\data\best_positions_day2')
+addpath ('C:\Users\rumpf\Documents\perceptual_space\best_positions\1D_best_positions_day1');
 
 %% 1. alle Spaces von allen subjects laden
 %matrix mit dimensionen: Stimuli x Dimensionen x Subjects
-subject_spaces = randn(8, 2, 16); % insert best position of each participant 
+subject_spaces = randn(8, 1, 11); % insert best position of each participant 
 
-path_directory = 'C:\Users\rumpf\Documents\perceptual_space\logfiles\data\best_positions_day2';
+path_directory = 'C:\Users\rumpf\Documents\perceptual_space\best_positions\1D_best_positions_day1';
 original_files = dir([path_directory filesep '*.mat']);
-bp = randn(8,2);
+bp = randn(8,1);
 
 for k =1:length(original_files)
     
     filename = [path_directory '/' original_files(k).name];
     load(original_files(k).name, '-mat')
     bp(:,1) = best_position(1,:).';
-    bp(:,2) = best_position(2,:).';
+ %  bp(:,2) = best_position(2,:).';
     subject_spaces(:,:,k) = bp;
 
 end 
@@ -49,6 +49,8 @@ end
 angles = deg2rad(linspace(0, 315, 8));
 space = [cos(angles); sin(angles)]';
 
+line = linspace(0, 135, 8);
+space = [line]';
 %% 3. Alle subject spaces an den Kreis alignen
 aligned_spaces = zeros(size(subject_spaces));
 for sub = 1:size(aligned_spaces, 3)
@@ -61,8 +63,10 @@ mean_space = mean(aligned_spaces, 3);
 % wenn mean_space wie ein Kreis aussieht, kannst du für die Auswertung
 % einfach davon ausgehen, dass der perzeptuelle Raum in etwa ein Kreis ist.
 
-scatter(mean_space(:, 1), mean_space(:, 2))
+%scatter(mean_space(:, 1), mean_space(:, 2))
+scatter(mean_space(:, 1), 0)
 axis equal
 for i = 1:8
-        text(mean_space(i, 1), mean_space(i, 2), num2str(i));
+       % text(mean_space(i, 1), mean_space(i, 2), num2str(i));
+        text(mean_space(i, 1), 0, num2str(i));
     end
