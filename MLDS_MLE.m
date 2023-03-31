@@ -81,10 +81,23 @@ sigma = 1;
 
 sigma = Estimate(end);
 p = Estimate(1:end-1);
-p = reshape(p, 2, 6);
-%p = [p(1:3), 0, p(4:5), 1, p(end)];
-p = [p(:,1:3), [1;0], p(:, 4:5), [1;1], p(:, end)]; % fixate position 4 and 7 (GS2 and GS5) 2D
 
+%val1 = 3; 
+%val2 = 6; % index to insert
+
+%fix1 = 0;
+%fix2 = 1;
+    %1D
+if ModelDimen == 1
+    p = reshape(p, 1, 6);
+    %p = [p(1:val1-1) fix1 p(val2:end)] % insert
+    p = [p(1:3), 0, p(4:5), 1, p(end)];
+    
+    %2D
+elseif ModelDimen == 2
+    p = reshape(p, 2, 6);
+    p = [p(:,1:3), [1;0], p(:, 4:5), [1;1], p(:, end)]; % fixate position 4 and 7 (GS2 and GS5) 2D
+end;
 
 %Add the first point that is immobile
 
@@ -94,7 +107,7 @@ if ModelDimen == 2
 elseif ModelDimen == 1
 %     Estimate = [0;p;1;sigma];
     Estimate = [p(:);sigma];
-end
+end;
     
     
     
