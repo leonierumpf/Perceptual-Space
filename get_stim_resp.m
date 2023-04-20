@@ -27,6 +27,7 @@ addpath ('C:\Users\rumpf\Documents\perceptual_space\maximum likelihood differenc
 Subject_Index = {'02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15'};
 d = 1;
 %Subject_Index = {'09'};
+%Subject_Index = {'10', '11', '12', '13', '14', '15'};
 %% read exp.xlsx DAY1
 if d == 1
 for si=1:length(Subject_Index)
@@ -344,7 +345,16 @@ end
     %% put together
     stim_resp = [stim, rating];
     stim_resp = str2double(string(stim_resp));
-
+    
+    z = 1;
+    for idx = 1:length(stim_resp)
+        if stim_resp(idx, 5) == 666
+            stim_resp(idx,:) = [];
+            fprintf('Deleted row %d because of missing value.', idx);
+            idx = 1:length(stim_resp);
+            z = z + 1;
+        end
+    end
     %% change all 2 to 0 and all 3 to 1
     %stim_resp(:,5) = changem(stim_resp(:,5), 0, 2); % B = changem(A,new,old); 2 = 0 and 3 = 1
     %stim_resp(:,5) = changem(stim_resp(:,5), 1, 3);
@@ -358,6 +368,7 @@ end
 %% read exp.xlsx DAY2
 
 Subject_Index = {'02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15'};
+Subject_Index = {'07', '08', '09', '10', '11', '12', '13', '14', '15'};
 if d == 2 
 for si=1:length(Subject_Index)
 
@@ -676,6 +687,14 @@ end
     stim_resp = [stim, rating];
     stim_resp = str2double(string(stim_resp));
 
+    z = 1;
+    for idx = 1:length(stim_resp)
+        if stim_resp(idx, 5) == 666
+            stim_resp(idx,:) = [];
+            fprintf('Deleted row %d because of missing value (sub%d).', idx, Subject_Index);
+            z = z + 1;
+        end
+    end
     %% change all 2 to 0 and all 3 to 1
     %stim_resp(:,5) = changem(stim_resp(:,5), 0, 2); % B = changem(A,new,old); 2 = 0 and 3 = 1
     %stim_resp(:,5) = changem(stim_resp(:,5), 1, 3);
